@@ -1,0 +1,8 @@
+#define CONF_WIFI_SSID 
+#define CONF_WIFI_PASS 
+#define CONF_APP_KEY
+#define CONF_APP_SECRET
+#define CONF_SWITCH_ID
+
+// Uncomment for debug
+// #define ENABLE_DEBUG
