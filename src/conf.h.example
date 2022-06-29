@@ -3,6 +3,7 @@
 #define CONF_APP_KEY
 #define CONF_APP_SECRET
 #define CONF_SWITCH_ID
+#define PASS_UPLOAD 
 
 // Uncomment for debug
 // #define ENABLE_DEBUG
