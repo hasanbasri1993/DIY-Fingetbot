@@ -16,23 +16,28 @@
 #include "SinricProSwitch.h"
 #include <ArduinoOTA.h>
 
+// Credentials 
 #define WIFI_SSID CONF_WIFI_SSID
 #define WIFI_PASS CONF_WIFI_PASS
 #define APP_KEY CONF_APP_KEY
 #define APP_SECRET CONF_APP_SECRET
 #define SWITCH_ID CONF_SWITCH_ID
 #define SWITCH_GPIO D4
-String newHostname = "Switch PC";
+
 
 #define BAUD_RATE 115200 // Change baudrate to your need
 
 #include <Servo.h>
 
 Servo myservo; // create servo object to control a servo
-
 bool myPowerState = false;
 unsigned long previousMillis = 0;
+
+// Custom settings
+String newHostname = "Switch PC";
 const long intervalCheck = 1000;
+const long degreeToggle = 170;
+long delayToggle = 700; // ms https://www.oreilly.com/library/view/os-x-el/9781491952139/ch01s11.html#once_the_shut_down_dialog_box_appears_yo
 
 bool onPowerState(const String &deviceId, bool &state)
 {
@@ -76,9 +81,9 @@ void handleButtonPress()
     if (myPowerState && actualMillis - previousMillis > intervalCheck)
     {
         digitalWrite(LED_BUILTIN, LOW);
-        myservo.write(170);
+        myservo.write(degreeToggle);
         SinricProSwitch &mySwitch = SinricPro[SWITCH_ID];
-        delay(2500);
+        delay(delayToggle);
         Serial.printf("Device %s turned %s (manually via flashbutton)\r\n", mySwitch.getDeviceId().c_str(), myPowerState ? "on" : "off");
         myservo.write(0);
         myPowerState = false;
