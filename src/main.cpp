@@ -8,15 +8,12 @@
 #define NDEBUG
 #endif
 
-#ifdef ESP8266
 #include <ESP8266WiFi.h>
-#endif
-
 #include "SinricPro.h"
 #include "SinricProSwitch.h"
 #include <ArduinoOTA.h>
 
-// Credentials 
+// Credentials
 #define WIFI_SSID CONF_WIFI_SSID
 #define WIFI_PASS CONF_WIFI_PASS
 #define APP_KEY CONF_APP_KEY
@@ -24,9 +21,7 @@
 #define SWITCH_ID CONF_SWITCH_ID
 #define SWITCH_GPIO D4
 
-
 #define BAUD_RATE 115200 // Change baudrate to your need
-
 #include <Servo.h>
 
 Servo myservo; // create servo object to control a servo
@@ -38,7 +33,6 @@ String newHostname = "Switch PC";
 const long intervalCheck = 1000;
 const long degreeToggle = 170;
 long delayToggle = 700; // ms https://www.oreilly.com/library/view/os-x-el/9781491952139/ch01s11.html#once_the_shut_down_dialog_box_appears_yo
-
 bool onPowerState(const String &deviceId, bool &state)
 {
     Serial.printf("Device %s turned %s (via SinricPro) \r\n", deviceId.c_str(), state ? "on" : "off");
@@ -97,6 +91,7 @@ void setupWiFi()
     Serial.printf("Default hostname: %s\n", WiFi.hostname().c_str());
     WiFi.mode(WIFI_STA);
     WiFi.hostname(newHostname.c_str());
+    Serial.println("");
     Serial.printf("New hostname: %s\n", WiFi.hostname().c_str());
     Serial.printf("\r\n[Wifi]: Connecting");
     WiFi.begin(WIFI_SSID, WIFI_PASS);
@@ -107,6 +102,7 @@ void setupWiFi()
         delay(250);
     }
     Serial.printf("connected!\r\n[WiFi]: IP-Address is %s\r\n", WiFi.localIP().toString().c_str());
+    Serial.println("");
     setupArduinoOta();
 }
 
